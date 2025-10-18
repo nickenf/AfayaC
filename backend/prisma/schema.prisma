@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      Role     @default(PATIENT)
+  firstName String?
+  lastName  String?
+  phone     String?
+  country   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sentMessages     ChatMessage[] @relation("SentMessages")
+  receivedMessages ChatMessage[] @relation("ReceivedMessages")
+  appointments     Appointment[]
+  analyticsEvents  AnalyticsEvent[]
+}
+
+enum Role {
+  PATIENT
+  COORDINATOR
+  DOCTOR
+  ADMIN
+}
+
+model MedicalService {
+  id          String @id @default(cuid())
+  name        String
+  description String?
+  category    String
+  priceRange  String?
+  createdAt   DateTime @default(now())
+
+  appointments Appointment[]
+}
+
+model Hospital {
+  id        String @id @default(cuid())
+  name      String
+  location  String
+  rating    Float?
+  createdAt DateTime @default(now())
+
+  doctors Doctor[]
+}
+
+model Doctor {
+  id          String      @id @default(cuid())
+  name        String
+  specialty   String
+  hospitalId  String
+  hospital    Hospital    @relation(fields: [hospitalId], references: [id])
+  createdAt   DateTime    @default(now())
+
+  appointments Appointment[]
+}
+
+model Appointment {
+  id           String        @id @default(cuid())
+  patientId    String
+  doctorId     String
+  serviceId    String
+  status       AppointmentStatus @default(PENDING)
+  scheduledDate DateTime
+  notes        String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  patient     User           @relation(fields: [patientId], references: [id])
+  doctor      Doctor         @relation(fields: [doctorId], references: [id])
+  service     MedicalService @relation(fields: [serviceId], references: [id])
+  messages    ChatMessage[]
+  media       Media[]
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+model ChatMessage {
+  id            String     @id @default(cuid())
+  senderId      String
+  receiverId    String
+  message       String
+  appointmentId String?
+  timestamp     DateTime   @default(now())
+
+  sender      User        @relation("SentMessages", fields: [senderId], references: [id])
+  receiver    User        @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
+}
+
+model Media {
+  id              String     @id @default(cuid())
+  url             String
+  type            MediaType
+  appointmentId   String?
+  createdAt       DateTime   @default(now())
+
+  appointment Appointment? @relation(fields: [appointmentId], references: [id])
+}
+
+enum MediaType {
+  IMAGE
+  DOCUMENT
+  VIDEO
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  eventType String
+  userId    String?
+  metadata  Json?
+  timestamp DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id])
+}
