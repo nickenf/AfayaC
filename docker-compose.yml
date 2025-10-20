@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: afayaconekt
       POSTGRES_USER: afayaconekt
-      POSTGRES_PASSWORD: afayaconekt_password
+      POSTGRES_PASSWORD: AfayaDB2025SecurePass!
     ports:
       - "5432:5432"
     volumes:
@@ -22,8 +22,8 @@ services:
     container_name: afayaconekt-minio
     restart: always
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin_password
+      MINIO_ROOT_USER: afayaminio2025
+      MINIO_ROOT_PASSWORD: AfayaMinIO2025SecureKey!@#
     ports:
       - "9000:9000"
       - "9001:9001"
