@@ -18,6 +18,19 @@ build/
 .env.test.local
 .env.production.local
 
+# Production environment files
+.env.production
+backend/.env.production
+frontend/.env.production
+
+# All environment files
+.env
+.env.*
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
 # IDE
 .vscode/
 .idea/
@@ -45,27 +58,4 @@ yarn-error.log*
 # Misc
 .cache/
 temp/
-tmp/. e n v 
- 
- 
-
-# Edit .gitignore to include .env.production files
-notepad .gitignore
-
-# Production environment files
-.env.production
-backend/.env.production
-frontend/.env.production
-
-# All environment files
-.env
-.env.*
-backend/.env
-backend/.env.*
-frontend/.env
-frontend/.env.*
-
-# Production environment files
-.env.production
-backend/.env.production
-frontend/.env.production
+tmp/
