@@ -35,9 +35,7 @@ services:
 
   # Backend API
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: nickenf/afayac-backend:latest
     container_name: afayaconekt-backend
     restart: always
     environment:
@@ -59,9 +57,7 @@ services:
 
   # Frontend
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: nickenf/afayac-frontend:latest
     container_name: afayaconekt-frontend
     restart: always
     environment:
