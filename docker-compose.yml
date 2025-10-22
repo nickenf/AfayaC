@@ -38,6 +38,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: afayac-backend:latest
     container_name: afayaconekt-backend
     restart: always
     environment:
@@ -62,6 +63,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: afayac-frontend:latest
     container_name: afayaconekt-frontend
     restart: always
     environment:
