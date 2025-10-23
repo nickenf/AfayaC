@@ -357,3 +357,5 @@ For support and questions:
 ---
 
 **AfayaConekt** - Connecting African patients with world-class healthcare globally 🌍💙
+
+*Last updated: October 2025 - Docker deployment optimized*
